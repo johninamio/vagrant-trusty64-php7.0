@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
 
-    vb.name = "jiam-vagrant-trusty-php7.0"
+    vb.name = "jiam-vagrant-trusty64-php7.0"
 
     vb.gui = false
 
