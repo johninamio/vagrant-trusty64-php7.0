@@ -70,16 +70,16 @@ apt-get update -qq >> $LOG_FILE 2>&1
 # Apache2
 # ---------------------------------------------------------------------------- #
 ##
-echo -e "\t-install apache2."
+echo -e "\t-install apache2.4."
 
 apt-get install -y apache2 apache2-doc apache2-utils >> $LOG_FILE 2>&1
 apt-get install -y libapache2-mod-php7.0 >> $LOG_FILE 2>&1
 
 ##
-# MySQL5
+# MySQL 5
 # ---------------------------------------------------------------------------- #
 ##
-echo -e "\t-install mysql5."
+echo -e "\t-install mysql5.5."
 
 debconf-set-selections <<< "mysql-server mysql-server/root_password password ${DATABASE_ROOT_PASS}"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${DATABASE_ROOT_PASS}"
