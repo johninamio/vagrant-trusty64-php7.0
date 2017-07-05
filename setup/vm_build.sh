@@ -10,7 +10,7 @@ SERVER_LANGUAGE="en_US.UTF-8"
 SERVER_TIMEZONE="Europe/Amsterdam"
 SERVER_DOCUMENT_ROOT=/var/www/html
 
-echo -e "install jiam/vagrant-trusty-php7.0"
+echo -e "install jiam/vagrant-trusty64-php7.0"
 
 ##
 # Upgrade
