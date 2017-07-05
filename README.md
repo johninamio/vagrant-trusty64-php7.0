@@ -5,7 +5,7 @@
 **System**
 - Ubuntu 14.04
 - Apache 2.4
-- MySQL 5.7
+- MySQL 5.5
 - PHP 7.0
 - phpmyadmin
 
