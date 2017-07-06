@@ -3,6 +3,7 @@
 LOG_FILE=/vagrant/setup/vm_build.log
 
 DATABASE_ROOT_PASS=root
+BLOWFISH_SECRET=`openssl rand -base64 32`
 
 SERVER_NAME="localhost"
 SERVER_ADMIN="your@email.address"
@@ -88,6 +89,9 @@ apt-get install -y mysql-server mysql-client >> $LOG_FILE 2>&1
 
 service mysql restart >> $LOG_FILE 2>&1
 
+# allow remote access (required to access from our private network host. Note that this is completely insecure if used in any other way)
+mysql -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${DATABASE_ROOT_PASS}' WITH GRANT OPTION; FLUSH PRIVILEGES; QUIT;"
+
 ##
 # PHP 7.0
 # ---------------------------------------------------------------------------- #
@@ -115,11 +119,15 @@ rm -rf phpMyAdmin-4.5.4.1-all-languages
 
 chmod -R 0755 phpmyadmin
 
+# Blowfish Secret
+mv /usr/share/phpmyadmin/config.sample.inc.php /usr/share/phpmyadmin/config.inc.php
+sed -i "s|cfg\['blowfish_secret'\] = ''|cfg\['blowfish_secret'\] = '${BLOWFISH_SECRET}'|" /usr/share/phpmyadmin/config.inc.php
+
 ##
 # Server Configuration
 # ---------------------------------------------------------------------------- #
 ##
-echo -e "\t-configure apache2."
+echo -e "\t-configure server."
 
 # Document Root
 rm -rf /var/www/html
@@ -198,4 +206,4 @@ npm install -g bower grunt gulp >> $LOG_FILE 2>&1
 echo -e "\t-update packages."
 
 apt-get update -qq >> $LOG_FILE 2>&1
-apt-get autoremove -y >> $LOG_xFILE 2>&1
+apt-get autoremove -y >> $LOG_FILE 2>&1
